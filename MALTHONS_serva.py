@@ -9,8 +9,11 @@ s.listen(5)
 client,addr=s.accept()
 print client.recv(1024)
 while True:
-	client.send(raw_input('> '))
-	print client.recv(4096)
-	
-
-	
+	command = raw_input('> ')
+	if command != '':
+		try:
+			client.send(command)
+			print client.recv(4096)
+		except socket.error:
+			print ('Error')
+			client,addr=s.accept()
